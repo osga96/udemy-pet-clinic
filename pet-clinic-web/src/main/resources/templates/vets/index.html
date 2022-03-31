@@ -10,7 +10,9 @@
 
     <ul>
         <li th:each="vet: ${vets}">
-            <p th:text="${vet}"></p>
+            <p th:text="'Id: ' + ${vet?.id}">vet</p>
+            <p th:text="'First name: ' + ${vet?.firstName}">vet</p>
+            <p th:text="'Last name: ' + ${vet?.lastName}">vet</p>
         </li>
     </ul>
 
