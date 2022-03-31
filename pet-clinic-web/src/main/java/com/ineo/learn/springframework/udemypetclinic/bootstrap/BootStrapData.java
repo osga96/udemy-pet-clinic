@@ -4,8 +4,6 @@ import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Owner;
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Vet;
 import com.ineo.learn.springframework.udemypetclinic.services.OwnerService;
 import com.ineo.learn.springframework.udemypetclinic.services.VetService;
-import com.ineo.learn.springframework.udemypetclinic.services.map.OwnerServiceMap;
-import com.ineo.learn.springframework.udemypetclinic.services.map.VetServiceMap;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -15,9 +13,9 @@ public class BootStrapData implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
 
-    public BootStrapData() {
-        ownerService = new OwnerServiceMap();
-        vetService = new VetServiceMap();
+    public BootStrapData(OwnerService ownerService, VetService vetService) {
+        this.ownerService = ownerService;
+        this.vetService = vetService;
     }
 
     @Override
