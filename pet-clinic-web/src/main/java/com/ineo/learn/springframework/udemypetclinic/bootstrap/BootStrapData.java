@@ -21,13 +21,13 @@ public class BootStrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         Owner owner1 = new Owner("Persona 1", "Apellido1");
-        owner1.setId(0L);
+        /*owner1.setId(0L);*/
         ownerService.save(owner1);
         Owner owner2 = new Owner("Persona 2", "Apellido2");
-        owner2.setId(1L);
+        /*owner2.setId(1L);*/
         ownerService.save(owner2);
         Owner owner3 = new Owner("Persona 3", "Apellido3");
-        owner3.setId(2L);
+        /*owner3.setId(2L);*/
         ownerService.save(owner3);
 
         Vet vet1 = new Vet("Veterinario 1", "Apellido1");
