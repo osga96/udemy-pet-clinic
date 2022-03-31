@@ -1,5 +1,6 @@
 package com.ineo.learn.springframework.udemypetclinic.bootstrap;
 
+import com.ineo.learn.springframework.udemypetclinic.datasource.FakeDataSource;
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Owner;
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Vet;
 import com.ineo.learn.springframework.udemypetclinic.services.OwnerService;
@@ -12,10 +13,12 @@ public class BootStrapData implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    public final FakeDataSource fakeDataSource;
 
-    public BootStrapData(OwnerService ownerService, VetService vetService) {
+    public BootStrapData(OwnerService ownerService, VetService vetService, FakeDataSource fakeDataSource) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.fakeDataSource = fakeDataSource;
     }
 
     @Override
@@ -52,6 +55,10 @@ public class BootStrapData implements CommandLineRunner {
         vetService.findAll().forEach(vet -> {
             System.out.println("Vet is: " + vet.toString());
         });
+
+        System.out.println("usr: " + fakeDataSource.getUsername());
+        System.out.println("pwd: " + fakeDataSource.getPassword());
+        System.out.println("jdbc: " + fakeDataSource.getJdbcUrl());
 
     }
 
