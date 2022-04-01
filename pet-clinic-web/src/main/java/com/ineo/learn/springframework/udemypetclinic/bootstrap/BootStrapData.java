@@ -1,10 +1,11 @@
 package com.ineo.learn.springframework.udemypetclinic.bootstrap;
 
-import com.ineo.learn.springframework.udemypetclinic.datasource.FakeDataSource;
+import com.ineo.learn.springframework.udemypetclinic.testdatasource.FakeDataSource;
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Owner;
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Vet;
 import com.ineo.learn.springframework.udemypetclinic.services.OwnerService;
 import com.ineo.learn.springframework.udemypetclinic.services.VetService;
+import com.ineo.learn.springframework.udemypetclinic.testdatasource.TestConfiguration;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +14,14 @@ public class BootStrapData implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
-    public final FakeDataSource fakeDataSource;
+    private final FakeDataSource fakeDataSource;
+    private final TestConfiguration testConfiguration;
 
-    public BootStrapData(OwnerService ownerService, VetService vetService, FakeDataSource fakeDataSource) {
+    public BootStrapData(OwnerService ownerService, VetService vetService, FakeDataSource fakeDataSource, TestConfiguration testConfiguration) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.fakeDataSource = fakeDataSource;
+        this.testConfiguration = testConfiguration;
     }
 
     @Override
@@ -59,6 +62,10 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("usr: " + fakeDataSource.getUsername());
         System.out.println("pwd: " + fakeDataSource.getPassword());
         System.out.println("jdbc: " + fakeDataSource.getJdbcUrl());
+
+        System.out.println("testMatch: " + testConfiguration.getUsername());
+        System.out.println("testMatch: " + testConfiguration.getPassword());
+        System.out.println("testMatch: " + testConfiguration.getJdbcUrl());
 
     }
 

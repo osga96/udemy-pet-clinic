@@ -1,4 +1,4 @@
-package com.ineo.learn.springframework.udemypetclinic.datasource;
+package com.ineo.learn.springframework.udemypetclinic.testdatasource;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
