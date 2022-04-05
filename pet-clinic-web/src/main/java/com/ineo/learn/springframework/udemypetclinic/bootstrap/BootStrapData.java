@@ -1,11 +1,9 @@
 package com.ineo.learn.springframework.udemypetclinic.bootstrap;
 
-import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Pet;
-import com.ineo.learn.springframework.udemypetclinic.modelPOJO.PetType;
+import com.ineo.learn.springframework.udemypetclinic.modelPOJO.*;
 import com.ineo.learn.springframework.udemypetclinic.services.PetTypeService;
+import com.ineo.learn.springframework.udemypetclinic.services.SpecialityService;
 import com.ineo.learn.springframework.udemypetclinic.testdatasource.FakeDataSource;
-import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Owner;
-import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Vet;
 import com.ineo.learn.springframework.udemypetclinic.services.OwnerService;
 import com.ineo.learn.springframework.udemypetclinic.services.VetService;
 import com.ineo.learn.springframework.udemypetclinic.testdatasource.TestConfiguration;
@@ -20,13 +18,15 @@ public class BootStrapData implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final SpecialityService specialityService;
     private final FakeDataSource fakeDataSource;
     private final TestConfiguration testConfiguration;
 
-    public BootStrapData(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, FakeDataSource fakeDataSource, TestConfiguration testConfiguration) {
+    public BootStrapData(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService, FakeDataSource fakeDataSource, TestConfiguration testConfiguration) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.specialityService = specialityService;
         this.fakeDataSource = fakeDataSource;
         this.testConfiguration = testConfiguration;
     }
@@ -34,6 +34,16 @@ public class BootStrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
+        int count = petTypeService.findAll().size();
+
+        if (count == 0) {
+            loadData();
+        }
+
+    }
+
+    private void loadData() {
+        /*Pet types*/
         PetType dog = new PetType();
         dog.setName("Dog");
         PetType savedDogPetType = petTypeService.save(dog);
@@ -42,6 +52,7 @@ public class BootStrapData implements CommandLineRunner {
         cat.setName("Cat");
         PetType savedCatPetType = petTypeService.save(cat);
 
+        /*Owners / pets*/
         Owner owner1 = new Owner("Persona 1", "Apellido1");
         owner1.setAddress("test calle 123");
         owner1.setCity("ciudad 1");
@@ -70,7 +81,6 @@ public class BootStrapData implements CommandLineRunner {
         owner3.setTelephone("1241231246");
 
 
-
         Pet pet2 = new Pet();
         pet2.setPetType(savedCatPetType);
         pet2.setOwner(owner3);
@@ -82,12 +92,29 @@ public class BootStrapData implements CommandLineRunner {
         /*owner3.setId(2L);*/
         ownerService.save(owner3);
 
+        /*Specialties / vets*/
+
+        Speciality radiology = new Speciality();
+        radiology.setDescription("Radiology");
+        specialityService.save(radiology);
+
+        Speciality surgery = new Speciality();
+        surgery.setDescription("Surgery");
+        specialityService.save(surgery);
+
+        Speciality dentistry = new Speciality();
+        dentistry.setDescription("Dentistry");
+        specialityService.save(dentistry);
+
         Vet vet1 = new Vet("Veterinario 1", "Apellido1");
         vet1.setId(0L);
+        vet1.getSpecialities().add(radiology);
         Vet vet2 = new Vet("Veterinario 2", "Apellido2");
         vet2.setId(1L);
+        vet2.getSpecialities().add(surgery);
         Vet vet3 = new Vet("Veterinario 3", "Apellido3");
         vet3.setId(2L);
+        vet3.getSpecialities().add(dentistry);
 
         vetService.save(vet1);
         vetService.save(vet2);
@@ -112,7 +139,6 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("testMatch: " + testConfiguration.getUsername());
         System.out.println("testMatch: " + testConfiguration.getPassword());
         System.out.println("testMatch: " + testConfiguration.getJdbcUrl());
-
     }
 
 }
