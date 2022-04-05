@@ -1,5 +1,7 @@
 package com.ineo.learn.springframework.udemypetclinic.bootstrap;
 
+import com.ineo.learn.springframework.udemypetclinic.modelPOJO.PetType;
+import com.ineo.learn.springframework.udemypetclinic.services.PetTypeService;
 import com.ineo.learn.springframework.udemypetclinic.testdatasource.FakeDataSource;
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Owner;
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Vet;
@@ -14,18 +16,29 @@ public class BootStrapData implements CommandLineRunner {
 
     private final OwnerService ownerService;
     private final VetService vetService;
+    private final PetTypeService petTypeService;
     private final FakeDataSource fakeDataSource;
     private final TestConfiguration testConfiguration;
 
-    public BootStrapData(OwnerService ownerService, VetService vetService, FakeDataSource fakeDataSource, TestConfiguration testConfiguration) {
+    public BootStrapData(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, FakeDataSource fakeDataSource, TestConfiguration testConfiguration) {
         this.ownerService = ownerService;
         this.vetService = vetService;
+        this.petTypeService = petTypeService;
         this.fakeDataSource = fakeDataSource;
         this.testConfiguration = testConfiguration;
     }
 
     @Override
     public void run(String... args) throws Exception {
+
+        PetType dog = new PetType();
+        dog.setName("Dog");
+        PetType savedDogPetType = petTypeService.save(dog);
+
+        PetType cat = new PetType();
+        cat.setName("Cat");
+        PetType savedCatPetType = petTypeService.save(cat);
+
         Owner owner1 = new Owner("Persona 1", "Apellido1");
         /*owner1.setId(0L);*/
         ownerService.save(owner1);
