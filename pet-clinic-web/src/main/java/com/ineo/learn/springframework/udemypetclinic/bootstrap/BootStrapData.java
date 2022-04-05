@@ -1,5 +1,6 @@
 package com.ineo.learn.springframework.udemypetclinic.bootstrap;
 
+import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Pet;
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.PetType;
 import com.ineo.learn.springframework.udemypetclinic.services.PetTypeService;
 import com.ineo.learn.springframework.udemypetclinic.testdatasource.FakeDataSource;
@@ -10,6 +11,8 @@ import com.ineo.learn.springframework.udemypetclinic.services.VetService;
 import com.ineo.learn.springframework.udemypetclinic.testdatasource.TestConfiguration;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+
+import java.time.LocalDate;
 
 @Component
 public class BootStrapData implements CommandLineRunner {
@@ -40,12 +43,42 @@ public class BootStrapData implements CommandLineRunner {
         PetType savedCatPetType = petTypeService.save(cat);
 
         Owner owner1 = new Owner("Persona 1", "Apellido1");
+        owner1.setAddress("test calle 123");
+        owner1.setCity("ciudad 1");
+        owner1.setTelephone("123 123 123");
+
+        Pet pet1 = new Pet();
+        pet1.setPetType(savedDogPetType);
+        pet1.setOwner(owner1);
+        pet1.setBirthDate(LocalDate.now());
+        pet1.setName("biscuit");
+
+        owner1.getPets().add(pet1);
+
         /*owner1.setId(0L);*/
         ownerService.save(owner1);
         Owner owner2 = new Owner("Persona 2", "Apellido2");
+        owner2.setAddress("test calle 123");
+        owner2.setCity("ciudad 1");
+        owner2.setTelephone("123123123");
+        owner2.getPets().add(pet1);
         /*owner2.setId(1L);*/
         ownerService.save(owner2);
         Owner owner3 = new Owner("Persona 3", "Apellido3");
+        owner3.setAddress("calle 2332");
+        owner3.setCity("ciudad 2");
+        owner3.setTelephone("1241231246");
+
+
+
+        Pet pet2 = new Pet();
+        pet2.setPetType(savedCatPetType);
+        pet2.setOwner(owner3);
+        pet2.setBirthDate(LocalDate.now());
+        pet2.setName("michi");
+
+        owner3.getPets().add(pet2);
+
         /*owner3.setId(2L);*/
         ownerService.save(owner3);
 

@@ -2,12 +2,13 @@ package com.ineo.learn.springframework.udemypetclinic.services.map;
 
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Pet;
 import com.ineo.learn.springframework.udemypetclinic.services.CrudService;
+import com.ineo.learn.springframework.udemypetclinic.services.PetService;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
 
 @Service
-public class PetServiceMap extends AbstractMapService<Pet, Long> implements CrudService<Pet, Long> {
+public class PetServiceMap extends AbstractMapService<Pet, Long> implements PetService {
     @Override
     public Set<Pet> findAll() {
         return super.findAll();
