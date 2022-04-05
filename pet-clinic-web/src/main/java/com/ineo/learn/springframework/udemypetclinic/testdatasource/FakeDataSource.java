@@ -14,7 +14,7 @@ public class FakeDataSource {
     public FakeDataSource(@Value("${pet.clinic.username}") String username,
                           @Value("${pet.clinic.password}") String password,
                           @Value("${pet.clinic.jdbcUrl}") String jdbcUrl,
-                          @Value("${test.otro.valor}") String otroValor) {
+                          @Value("test.otro.valor") String otroValor) {
         this.username = username;
         this.password = password;
         this.jdbcUrl = jdbcUrl;

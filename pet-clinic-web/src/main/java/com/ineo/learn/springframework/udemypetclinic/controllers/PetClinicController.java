@@ -12,7 +12,7 @@ public class PetClinicController {
     private PetServiceMap petServiceMap;
     private VetServiceMap vetServiceMap;
 
-    @RequestMapping({"/", "", "index", "index.html"})
+    @RequestMapping({"/", "", "index", "index.html", ".html"})
     private String index() {
         return "index";
     }
