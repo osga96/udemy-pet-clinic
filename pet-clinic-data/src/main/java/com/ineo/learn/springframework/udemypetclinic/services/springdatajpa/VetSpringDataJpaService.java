@@ -3,12 +3,14 @@ package com.ineo.learn.springframework.udemypetclinic.services.springdatajpa;
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Vet;
 import com.ineo.learn.springframework.udemypetclinic.repositories.VetRepository;
 import com.ineo.learn.springframework.udemypetclinic.services.VetService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.Set;
 
 @Service
+@Profile("springdatajpa")
 public class VetSpringDataJpaService implements VetService {
 
     private final VetRepository vetRepository;
