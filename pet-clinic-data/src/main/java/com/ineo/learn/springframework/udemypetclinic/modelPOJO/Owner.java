@@ -53,6 +53,9 @@ public class Owner extends Person {
     }
 
     public Set<Pet> getPets() {
+        if (pets == null) {
+            pets = new HashSet<>();
+        }
         return pets;
     }
 
