@@ -1,11 +1,8 @@
 package com.ineo.learn.springframework.udemypetclinic.bootstrap;
 
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.*;
-import com.ineo.learn.springframework.udemypetclinic.services.PetTypeService;
-import com.ineo.learn.springframework.udemypetclinic.services.SpecialityService;
+import com.ineo.learn.springframework.udemypetclinic.services.*;
 import com.ineo.learn.springframework.udemypetclinic.testdatasource.FakeDataSource;
-import com.ineo.learn.springframework.udemypetclinic.services.OwnerService;
-import com.ineo.learn.springframework.udemypetclinic.services.VetService;
 import com.ineo.learn.springframework.udemypetclinic.testdatasource.TestConfiguration;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
@@ -19,14 +16,16 @@ public class BootStrapData implements CommandLineRunner {
     private final VetService vetService;
     private final PetTypeService petTypeService;
     private final SpecialityService specialityService;
+    private final VisitService visitService;
     private final FakeDataSource fakeDataSource;
     private final TestConfiguration testConfiguration;
 
-    public BootStrapData(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService, FakeDataSource fakeDataSource, TestConfiguration testConfiguration) {
+    public BootStrapData(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService, VisitService visitService, FakeDataSource fakeDataSource, TestConfiguration testConfiguration) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
         this.specialityService = specialityService;
+        this.visitService = visitService;
         this.fakeDataSource = fakeDataSource;
         this.testConfiguration = testConfiguration;
     }
@@ -139,6 +138,13 @@ public class BootStrapData implements CommandLineRunner {
         System.out.println("testMatch: " + testConfiguration.getUsername());
         System.out.println("testMatch: " + testConfiguration.getPassword());
         System.out.println("testMatch: " + testConfiguration.getJdbcUrl());
+
+        Visit visit = new Visit();
+        visit.setDescription("Visita 1");
+        visit.setDate(LocalDate.now());
+        visit.setPet(pet1);
+        visitService.save(visit);
+
     }
 
 }
