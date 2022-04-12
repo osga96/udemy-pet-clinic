@@ -15,15 +15,17 @@ public class BootStrapData implements CommandLineRunner {
     private final OwnerService ownerService;
     private final VetService vetService;
     private final PetTypeService petTypeService;
+    private final PetService petService;
     private final SpecialityService specialityService;
     private final VisitService visitService;
     private final FakeDataSource fakeDataSource;
     private final TestConfiguration testConfiguration;
 
-    public BootStrapData(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, SpecialityService specialityService, VisitService visitService, FakeDataSource fakeDataSource, TestConfiguration testConfiguration) {
+    public BootStrapData(OwnerService ownerService, VetService vetService, PetTypeService petTypeService, PetService petService, SpecialityService specialityService, VisitService visitService, FakeDataSource fakeDataSource, TestConfiguration testConfiguration) {
         this.ownerService = ownerService;
         this.vetService = vetService;
         this.petTypeService = petTypeService;
+        this.petService = petService;
         this.specialityService = specialityService;
         this.visitService = visitService;
         this.fakeDataSource = fakeDataSource;
@@ -143,6 +145,8 @@ public class BootStrapData implements CommandLineRunner {
         visit.setDescription("Visita 1");
         visit.setDate(LocalDate.now());
         visit.setPet(pet1);
+        petService.save(pet1);
+        petService.save(pet2);
         visitService.save(visit);
 
     }

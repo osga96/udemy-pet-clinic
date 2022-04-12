@@ -17,7 +17,7 @@ public class Owner extends Person {
     @Column(name = "telephone")
     private String telephone;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "owner")
+    @OneToMany(cascade = CascadeType.MERGE, mappedBy = "owner", fetch = FetchType.EAGER)
     private Set<Pet> pets;
 
     public Owner(String firstName, String lastName) {

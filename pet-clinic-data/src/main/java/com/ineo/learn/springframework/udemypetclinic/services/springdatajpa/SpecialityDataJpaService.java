@@ -1,6 +1,7 @@
 package com.ineo.learn.springframework.udemypetclinic.services.springdatajpa;
 
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Speciality;
+import com.ineo.learn.springframework.udemypetclinic.repositories.SpecialtyRepository;
 import com.ineo.learn.springframework.udemypetclinic.services.SpecialityService;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -12,35 +13,39 @@ import java.util.Set;
 @Profile("springdatajpa")
 public class SpecialityDataJpaService implements SpecialityService {
 
-    private final SpecialityService specialityService;
+        private final SpecialtyRepository specialtyRepository;
 
-    public SpecialityDataJpaService(SpecialityService specialityService) {
-        this.specialityService = specialityService;
+    public SpecialityDataJpaService(SpecialtyRepository specialtyRepository) {
+        this.specialtyRepository = specialtyRepository;
     }
 
     @Override
     public Set<Speciality> findAll() {
 
-        return new HashSet<>(specialityService.findAll());
+        Set<Speciality> specialities = new HashSet<>();
+
+        specialtyRepository.findAll().forEach(specialities::add);
+
+        return specialities;
     }
 
     @Override
     public Speciality findById(Long aLong) {
-        return specialityService.findById(aLong);
+        return specialtyRepository.findById(aLong).orElse(null);
     }
 
     @Override
     public Speciality save(Speciality object) {
-        return specialityService.save(object);
+        return specialtyRepository.save(object);
     }
 
     @Override
     public void delete(Speciality object) {
-        specialityService.delete(object);
+        specialtyRepository.delete(object);
     }
 
     @Override
     public void deleteById(Long id) {
-        specialityService.deleteById(id);
+        specialtyRepository.deleteById(id);
     }
 }
