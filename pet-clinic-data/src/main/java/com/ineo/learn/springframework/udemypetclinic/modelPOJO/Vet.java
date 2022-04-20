@@ -1,9 +1,16 @@
 package com.ineo.learn.springframework.udemypetclinic.modelPOJO;
 
+import lombok.*;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Setter
+@Getter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 @Entity
 @Table(name = "vets")
 public class Vet extends Person {
@@ -16,18 +23,6 @@ public class Vet extends Person {
     public Vet(String firstName, String lastName) {
         super(firstName, lastName);
         this.specialities = new HashSet<>();
-    }
-
-    public Vet() {
-
-    }
-
-    public Set<Speciality> getSpecialities() {
-        return specialities;
-    }
-
-    public void setSpecialities(Set<Speciality> specialities) {
-        this.specialities = specialities;
     }
 
     @Override

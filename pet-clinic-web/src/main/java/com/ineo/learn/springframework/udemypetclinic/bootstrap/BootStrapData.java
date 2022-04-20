@@ -149,6 +149,9 @@ public class BootStrapData implements CommandLineRunner {
         petService.save(pet2);
         visitService.save(visit);
 
+        Visit.builder().description("test").pet(pet1).build();
+        ownerService.save(Owner.builder().address("test").city("test").firstName("test 1 builder").lastName("test 2").build());
+
     }
 
 }
