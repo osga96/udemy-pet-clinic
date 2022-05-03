@@ -77,7 +77,7 @@ public class BootStrapData implements CommandLineRunner {
         /*owner2.setId(1L);*/
         ownerService.save(owner2);
         Owner owner3 = new Owner("Persona 3", "Apellido3");
-        owner3.setAddress("calle 2332");
+        owner3.setAddress("calle 2332 michigan");
         owner3.setCity("ciudad 2");
         owner3.setTelephone("1241231246");
 
@@ -92,6 +92,8 @@ public class BootStrapData implements CommandLineRunner {
 
         /*owner3.setId(2L);*/
         ownerService.save(owner3);
+        Owner owner4 = Owner.builder().firstName("Mismo apellido prueba").lastName("Apellido3").build();
+        ownerService.save(owner4);
 
         /*Specialties / vets*/
 
