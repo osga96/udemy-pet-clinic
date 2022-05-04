@@ -6,6 +6,8 @@ import com.ineo.learn.springframework.udemypetclinic.modelPOJO.PetType;
 import com.ineo.learn.springframework.udemypetclinic.services.OwnerService;
 import com.ineo.learn.springframework.udemypetclinic.services.PetService;
 import com.ineo.learn.springframework.udemypetclinic.services.PetTypeService;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -14,10 +16,13 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
 @Controller
+@Slf4j
 @RequestMapping("/owners/{ownerId}")
 public class PetController {
 
@@ -60,6 +65,9 @@ public class PetController {
     public String processCreationForm(Owner owner, @Valid Pet pet, BindingResult result, ModelMap model) {
         owner.addPet(pet);
         if (result.hasErrors()) {
+            result.getAllErrors().forEach(objectError -> {
+                log.error("Error: " + objectError.toString());
+            });
             model.put("pet", pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         }
