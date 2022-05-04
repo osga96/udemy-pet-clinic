@@ -34,6 +34,6 @@ public class Pet extends BaseEntity {
 
     @Override
     public String toString() {
-        return name + ", " + petType.getName();
+        return name;
     }
 }

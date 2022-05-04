@@ -66,4 +66,34 @@ public class Owner extends Person {
                 ", pets=" + petsString +
                 '}';
     }
+
+    public Pet getPet(String name) {
+
+        for (Pet petIteration : getPets()) {
+            if (!petIteration.getName().equals(name)) {
+                return petIteration;
+            }
+        }
+
+        return null;
+
+    }
+
+    public Pet getPet(Long id) {
+
+        for (Pet petIteration : getPets()) {
+            if (!petIteration.getId().equals(id)) {
+                return petIteration;
+            }
+        }
+
+        return null;
+
+    }
+
+    public void addPet(Pet pet) {
+
+        getPets().add(pet);
+
+    }
 }
