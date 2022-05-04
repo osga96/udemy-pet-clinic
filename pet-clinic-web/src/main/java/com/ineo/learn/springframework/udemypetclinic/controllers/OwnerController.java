@@ -13,12 +13,17 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RequestMapping("/owners")
 @Controller
 public class OwnerController {
 
+    public static final String OWNERS_CREATE_OR_UPDATE_OWNER_FORM = "/owners/createOrUpdateOwnerForm";
+    public static final String OWNERS_FIND_OWNERS = "owners/findOwners";
+    public static final String REDIRECT_OWNERS = "redirect:/owners/";
+    public static final String LIST_OWNERS = "listOwners";
     private final OwnerService ownerService;
     private final OwnerRepository ownerRepository;
 
@@ -63,18 +68,18 @@ public class OwnerController {
 
 
         if (lastName.equals("")) {
-            return "owners/findOwners";
+            return OWNERS_FIND_OWNERS;
         }
 
         if (ownersResults.getContent().isEmpty()) {
             // no owners found
             result.rejectValue("lastName", "notFound", "not found");
-            return "owners/findOwners";
+            return OWNERS_FIND_OWNERS;
         }
         else if (ownersResults.getTotalElements() == 1) {
             // 1 owner found
             owner = ownersResults.iterator().next();
-            return "redirect:/owners/" + owner.getId();
+            return REDIRECT_OWNERS + owner.getId();
         }
         else {
             // multiple owners found
@@ -92,12 +97,12 @@ public class OwnerController {
     }
 
     private String addPaginationModel(int page, Model model, String lastName, Page<Owner> paginated) {
-        model.addAttribute("listOwners", paginated);
+        model.addAttribute(LIST_OWNERS, paginated);
         List<Owner> listOwners = paginated.getContent();
         model.addAttribute("currentPage", page);
         model.addAttribute("totalPages", paginated.getTotalPages());
         model.addAttribute("totalItems", paginated.getTotalElements());
-        model.addAttribute("listOwners", listOwners);
+        model.addAttribute(LIST_OWNERS, listOwners);
         return "owners/ownersList";
     }
 
@@ -113,18 +118,52 @@ public class OwnerController {
 
         if (ownersResults.isEmpty()) {
             result.rejectValue("lastName", "notFound", "not found");
-            return "owners/findOwners";
+            return OWNERS_FIND_OWNERS;
         } else if (ownersResults.size() == 1) {
             owner = ownersResults.iterator().next();
-            return "redirect:/owners/" + owner.getId();
+            return REDIRECT_OWNERS + owner.getId();
         } else {
-            model.addAttribute("listOwners", ownersResults);
+            model.addAttribute(LIST_OWNERS, ownersResults);
             return "owners/ownersList";
         }
 
 
     }
 
+    @GetMapping("/create/new")
+    public String createOrUpdateOwnerForm(Model model) {
+        model.addAttribute("owner", Owner.builder().build());
+        return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
+    }
 
+    @PostMapping("/create/new")
+    public String createOrUpdateOwner(@Valid Owner owner, BindingResult result) {
+       if (result.hasErrors()) {
+           return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
+       } else {
+           Owner savedOwner = ownerService.save(owner);
+           return REDIRECT_OWNERS + owner.getId();
+       }
+    }
+
+    @GetMapping("/{ownerId}/edit")
+    public String initUpdateOwnerForm(@PathVariable("ownerId") Long ownerId, Model model) {
+        Owner owner = ownerService.findById(ownerId);
+        model.addAttribute(owner);
+        return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
+    }
+
+    @PostMapping("/{ownerId}/edit")
+    public String processUpdateOwnerForm(@Valid Owner owner, BindingResult result,
+                                         @PathVariable("ownerId") Long ownerId) {
+        if (result.hasErrors()) {
+            return OWNERS_CREATE_OR_UPDATE_OWNER_FORM;
+        }
+        else {
+            owner.setId(ownerId);
+            ownerService.save(owner);
+            return "redirect:/owners/{ownerId}";
+        }
+    }
 
 }
