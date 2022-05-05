@@ -53,7 +53,7 @@
             </dl>
         </td>
         <td valign="top">
-            <table class="table-condensed">
+            <table class="table-condensed col-md-4">
                 <thead>
                 <tr>
                     <th>Visit Date</th>
@@ -61,7 +61,7 @@
                 </tr>
                 </thead>
                 <tr th:each="visit : ${pet.visits}">
-                    <td th:text="${#temporals.format(visit.date, 'yyyy-MM-dd')}"></td>
+                    <td th:text="${#temporals.format(visit.date, 'dd/MM/yyyy')}"></td>
                     <td th:text="${visit?.description}"></td>
                 </tr>
                 <tr>

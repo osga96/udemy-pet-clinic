@@ -79,7 +79,7 @@ public class PetController {
 
     @GetMapping("/pets/{petId}/edit")
     public String initUpdateForm(Owner owner, @PathVariable("petId") Long petId, ModelMap model) {
-        Pet pet = owner.getPet(petId);
+        Pet pet = petService.findById(petId);
         model.put("pet", pet);
         return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
     }
@@ -88,9 +88,11 @@ public class PetController {
     public String processUpdateForm(@Valid Pet pet, BindingResult result, Owner owner, ModelMap model) {
         if (result.hasErrors()) {
             model.put("pet", pet);
+            petService.save(pet);
             return VIEWS_PETS_CREATE_OR_UPDATE_FORM;
         }
         else {
+            petService.save(pet);
             owner.addPet(pet);
             ownerService.save(owner);
             return "redirect:/owners/{ownerId}";

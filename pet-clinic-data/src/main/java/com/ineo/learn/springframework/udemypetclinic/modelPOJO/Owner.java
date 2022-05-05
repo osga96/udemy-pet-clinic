@@ -3,7 +3,9 @@ package com.ineo.learn.springframework.udemypetclinic.modelPOJO;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Setter
@@ -24,7 +26,7 @@ public class Owner extends Person {
     private String telephone;
 
     @OneToMany(cascade = CascadeType.MERGE, mappedBy = "owner", fetch = FetchType.EAGER)
-    private Set<Pet> pets = new HashSet<>();
+    private List<Pet> pets = new ArrayList();
 
     /*@Builder
     public Owner(String firstName, String lastName, String address, String city, String telephone, Set<Pet> pets) {
@@ -36,7 +38,7 @@ public class Owner extends Person {
     }*/
 
     @Builder
-    public Owner(Long id, String firstName, String lastName, String address, String city, String telephone, Set<Pet> pets) {
+    public Owner(Long id, String firstName, String lastName, String address, String city, String telephone, List pets) {
         super(id, firstName, lastName);
         this.address = address;
         this.city = city;
@@ -93,7 +95,24 @@ public class Owner extends Person {
 
     public void addPet(Pet pet) {
 
-        getPets().add(pet);
+        if (pet.isNew()) {
+            pets.add(pet);
+        } else {
+            for (int i = 0; i < pets.size(); i++) {
+                if (pets.get(i).getId().equals(pet.getId())) {
+                    pet.setOwner(this);
+                    pets.set(i, pet);
+                }
+            }
+        }
 
+    }
+
+    public void addVisit(Long petId, Visit visit) {
+        for (Pet pet : getPets()) {
+            if (pet.getId().equals(petId)) {
+                pet.addVisit(visit);
+            }
+        }
     }
 }
