@@ -2,6 +2,7 @@ package com.ineo.learn.springframework.udemypetclinic.controllers;
 
 import com.ineo.learn.springframework.udemypetclinic.modelPOJO.Vet;
 import com.ineo.learn.springframework.udemypetclinic.services.VetService;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +28,7 @@ public class VetController {
         return "vets/index";
     }
 
-    @PostMapping("/api/vets/json")
+    @PostMapping(value = "/api/vets/json", produces = MediaType.APPLICATION_JSON_VALUE)
     public @ResponseBody Set<Vet> jsonVets(Model model) {
         return vetService.findAll();
     }
