@@ -109,19 +109,26 @@ public class BootStrapData implements CommandLineRunner {
         dentistry.setDescription("Dentistry");
         specialityService.save(dentistry);
 
-        Vet vet1 = new Vet("Veterinario 1", "Apellido1");
-        vet1.setId(0L);
-        vet1.getSpecialities().add(radiology);
-        Vet vet2 = new Vet("Veterinario 2", "Apellido2");
-        vet2.setId(1L);
-        vet2.getSpecialities().add(surgery);
-        Vet vet3 = new Vet("Veterinario 3", "Apellido3");
-        vet3.setId(2L);
+        Vet vet1 = new Vet("Veterinario 2", "Apellido2");
+        vet1.setId(1L);
+        vet1.getSpecialities().add(surgery);
+        Vet vet2 = new Vet("Veterinario 3", "Apellido3");
+        vet2.setId(2L);
+        vet2.getSpecialities().add(dentistry);
+        Vet vet3 = new Vet("Veterinario 4", "Apellido4");
+        vet3.setId(3L);
         vet3.getSpecialities().add(dentistry);
+        vet3.getSpecialities().add(surgery);
+        vet3.getSpecialities().add(radiology);
+        Vet vet4 = new Vet("Veterinario 5", "Apellido5");
+        vet4.setId(4L);
+        vet4.getSpecialities().add(dentistry);
+        vet4.getSpecialities().add(radiology);
 
         vetService.save(vet1);
         vetService.save(vet2);
         vetService.save(vet3);
+        vetService.save(vet4);
 
         System.out.println("Listing all Owners");
 

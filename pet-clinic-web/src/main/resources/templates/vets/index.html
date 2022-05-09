@@ -22,12 +22,19 @@
             <th>Id</th>
             <th>First name</th>
             <th>Last name</th>
+            <th>Specialties</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="vet : ${vets}">
             <td th:text="${vet.id}"></td>
-            <td th:text="${vet.firstName + ' ' + vet.lastName}"></td>
+            <td th:text="${vet.firstName}"></td>
+            <td th:text="${vet.lastName}"></td>
+            <td>
+                <ul class="list-group list-unstyled" th:each="speciality : ${vet.specialities}">
+                    <li class="list-group-item-action list-unstyled" th:text="${speciality.description}"></li>
+                </ul>
+            </td>
         </tr>
         </tbody>
     </table>
