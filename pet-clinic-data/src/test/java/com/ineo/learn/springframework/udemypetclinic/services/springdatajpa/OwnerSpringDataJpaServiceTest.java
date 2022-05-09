@@ -51,8 +51,8 @@ class OwnerSpringDataJpaServiceTest {
         ownerSet.add(Owner.builder().id(2L).firstName("testtest").lastName("test2").build());
         when(ownerRepository.findAll()).thenReturn(ownerSet);
 
-        assertNotNull(ownerSet);
-        assertEquals(2, ownerSet.size());
+        assertNotNull(ownerRepository.findAll());
+        assertEquals(2, ((Set<Owner>) ownerRepository.findAll()).size());
     }
 
     @Test
