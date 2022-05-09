@@ -10,8 +10,8 @@
     <artifactId>pet-clinic-data</artifactId>
 
     <properties>
-        <maven.compiler.source>18</maven.compiler.source>
-        <maven.compiler.target>18</maven.compiler.target>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
         <!--TODO: para cuando los módulos no tienen main, añadimos lo de abajo-->
         <spring-boot.repackage.skip>true</spring-boot.repackage.skip>
     </properties>
